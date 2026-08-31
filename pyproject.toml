@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "speccert"
+version = "1.0.0"
+description = "Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)"
+readme = "README.md"
+authors = [
+    { name = "Andre Monreal-Hernández", email = "amonreal@example.com" }
+]
+license = { text = "MIT" }
+keywords = [
+    "spectroscopy",
+    "uv-vis",
+    "td-dft",
+    "infrared-spectroscopy",
+    "raman-spectroscopy",
+    "density-of-states",
+    "pdos",
+    "d-band-center",
+    "electronic-structure",
+    "vibrational-scaling",
+    "orca",
+    "gaussian",
+    "vasp",
+    "computational-chemistry",
+    "reproducibility"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent"
+]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.20.0",
+    "scipy>=1.7.0",
+    "pandas>=1.3.0",
+    "matplotlib>=3.5.0",
+    "jinja2>=3.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "build>=0.10.0",
+    "twine>=4.0.0"
+]
+
+[project.scripts]
+speccert = "speccert.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/amonreal/speccert"
+Documentation = "https://github.com/amonreal/speccert#readme"
+Repository = "https://github.com/amonreal/speccert.git"
+"Bug Tracker" = "https://github.com/amonreal/speccert/issues"
+Changelog = "https://github.com/amonreal/speccert/blob/main/CHANGELOG.md"

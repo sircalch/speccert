@@ -1,0 +1,11 @@
+Parameter,Value,Status
+Target System / Molecule,Platinum(II) Tetraphenylporphyrin / Pt(111) Surface (ORCA 6.0 & VASP 6.4),PASS
+Level of Theory / Functional,wB97X-D / def2-TZVP,PASS
+UV-Vis Absorption Max (lambda_max),418.4 nm (f_max = 1.2500),PASS
+Total Oscillator Strength Sum,2.230 (6 excited states),PASS
+Vibrational Scaling Factor,0.9570 (wB97X-D),PASS
+Vibrational Modes Convoluted,10 modes,PASS
+Strongest IR Diagnostic Band,1607.8 cm^-1 (Carbonyl (C=O) / Alkene (C=C) / Amide Region),PASS
+Hammer-Norskov d-Band Center (eps_d),-2.463 eV rel to E_F,PASS
+d-Band Width (W_d),1.315 eV,PASS
+d-Band Filling Fraction,93.1%,PASS

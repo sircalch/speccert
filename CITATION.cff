@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+authors:
+  - family-names: "Monreal-Hernández"
+    given-names: "Andre"
+    orcid: "https://orcid.org/0009-0000-0000-0000"
+title: "SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)"
+version: 1.0.0
+date-released: 2026-08-31
+license: MIT
+repository-code: "https://github.com/amonreal/speccert"
+keywords:
+  - "spectroscopy"
+  - "uv-vis"
+  - "td-dft"
+  - "infrared-spectroscopy"
+  - "d-band-center"
+  - "reproducibility"

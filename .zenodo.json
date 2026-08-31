@@ -1,0 +1,20 @@
+{
+  "title": "SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)",
+  "description": "An open-source scientific toolkit for simulated spectroscopy quality control, TD-DFT UV-Vis line broadening, empirical harmonic-to-anharmonic vibrational frequency scaling for IR and Raman spectra, and electronic density of states (DOS) d-band center calculations.",
+  "creators": [
+    {
+      "name": "Monreal-Hernández, Andre",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": [
+    "spectroscopy",
+    "uv-vis",
+    "td-dft",
+    "infrared-spectroscopy",
+    "d-band-center",
+    "reproducibility"
+  ]
+}
