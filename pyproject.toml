@@ -69,3 +69,7 @@ Documentation = "https://github.com/amonreal/speccert#readme"
 Repository = "https://github.com/amonreal/speccert.git"
 "Bug Tracker" = "https://github.com/amonreal/speccert/issues"
 Changelog = "https://github.com/amonreal/speccert/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+include = ["speccert*"]
+
