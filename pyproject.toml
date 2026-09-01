@@ -1,4 +1,4 @@
-[build-system]
+﻿[build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
@@ -64,12 +64,13 @@ dev = [
 speccert = "speccert.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/amonreal/speccert"
-Documentation = "https://github.com/amonreal/speccert#readme"
-Repository = "https://github.com/amonreal/speccert.git"
-"Bug Tracker" = "https://github.com/amonreal/speccert/issues"
-Changelog = "https://github.com/amonreal/speccert/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/sircalch/speccert"
+Documentation = "https://github.com/sircalch/speccert#readme"
+Repository = "https://github.com/sircalch/speccert.git"
+"Bug Tracker" = "https://github.com/sircalch/speccert/issues"
+Changelog = "https://github.com/sircalch/speccert/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 include = ["speccert*"]
+
 

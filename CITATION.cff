@@ -1,4 +1,4 @@
-cff-version: 1.2.0
+﻿cff-version: 1.2.0
 message: "If you use this software in your research, please cite it as below."
 authors:
   - family-names: "Monreal-Hernández"
@@ -8,7 +8,7 @@ title: "SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-
 version: 1.0.0
 date-released: 2026-08-31
 license: MIT
-repository-code: "https://github.com/amonreal/speccert"
+repository-code: "https://github.com/sircalch/speccert"
 keywords:
   - "spectroscopy"
   - "uv-vis"
@@ -16,3 +16,4 @@ keywords:
   - "infrared-spectroscopy"
   - "d-band-center"
   - "reproducibility"
+

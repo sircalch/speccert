@@ -1,6 +1,6 @@
-# SpecCert
+﻿# SpecCert
 
-[![CI](https://github.com/amonreal/speccert/actions/workflows/test.yml/badge.svg)](https://github.com/amonreal/speccert/actions)
+[![CI](https://github.com/sircalch/speccert/actions/workflows/test.yml/badge.svg)](https://github.com/sircalch/speccert/actions)
 [![PyPI version](https://img.shields.io/pypi/v/speccert.svg?color=blue)](https://pypi.org/project/speccert/)
 [![Python versions](https://img.shields.io/pypi/pyversions/speccert.svg)](https://pypi.org/project/speccert/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -68,7 +68,7 @@ pip install speccert
 
 ### From Source
 ```bash
-git clone https://github.com/amonreal/speccert.git
+git clone https://github.com/sircalch/speccert.git
 cd speccert
 pip install -e .[dev]
 ```
@@ -158,7 +158,7 @@ If you use SpecCert in your publications, please cite:
   year = {2026},
   version = {1.0.0},
   publisher = {Zenodo},
-  url = {https://github.com/amonreal/speccert}
+  url = {https://github.com/sircalch/speccert}
 }
 ```
 
@@ -167,3 +167,4 @@ If you use SpecCert in your publications, please cite:
 ## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+

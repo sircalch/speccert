@@ -1,4 +1,4 @@
-"""
+﻿"""
 Manuscript Methods snippet, summary tables (CSV, LaTeX), and BibTeX citations for SpecCert.
 """
 
@@ -108,7 +108,7 @@ def generate_speccert_manuscript_assets(
   year = {2026},
   version = {1.0.0},
   publisher = {Zenodo},
-  url = {https://github.com/amonreal/speccert}
+  url = {https://github.com/sircalch/speccert}
 }
 """
     with open(bib_path, "w", encoding="utf-8") as f:
@@ -116,3 +116,4 @@ def generate_speccert_manuscript_assets(
     generated["citation_bib"] = bib_path
 
     return generated
+
