@@ -4,7 +4,7 @@ and Electronic Structure Certification (DOS & d-Band Center).
 """
 
 __version__ = "1.0.0"
-__author__ = "Andre Monreal-Hernández"
+__author__ = "Andres Monreal-Hernández"
 __license__ = "MIT"
 
 from speccert.core.uv_vis import calculate_uv_vis_spectrum, UVVisResult

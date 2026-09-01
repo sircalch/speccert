@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)"
 readme = "README.md"
 authors = [
-    { name = "Andre Monreal-Hernández", email = "amonreal@example.com" }
+    { name = "Andres Monreal-Hernández", email = "amonreal@example.com" }
 ]
 license = { text = "MIT" }
 keywords = [
