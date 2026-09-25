@@ -53,7 +53,7 @@ def run_demo(output_dir: str = "speccert_demo_output"):
     metadata = {
         "system": "Platinum(II) Tetraphenylporphyrin / Pt(111) Surface",
         "functional": "wB97X-D / def2-TZVP",
-        "software": "ORCA 6.0 & VASP 6.4"
+        "software": "SYNTHETIC DEMO DATA (ORCA/VASP-like outputs; not real calculations)"
     }
 
     # 1. TD-DFT UV-Vis excitation states
