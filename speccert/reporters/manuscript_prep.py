@@ -91,7 +91,7 @@ def generate_speccert_manuscript_assets(
 
     full_methods = (
         f"Spectroscopic and electronic structure simulations for {sys_str} were performed with {soft_str} at the {func_str} level of theory. "
-        f"Spectral convolution, empirical scaling, and electronic structure audits were certified using SpecCert v1.0.0 (Monreal-Hernández, 2026). "
+        f"Spectral convolution, empirical scaling, and electronic structure audits were certified using SpecCert v1.1.0 (Monreal-Hernández, 2026). "
         f"{uv_str}{vib_str}{dos_str}"
         f"The computational spectroscopy audit achieved an overall quality status of: {report.overall_status}."
     )
@@ -106,7 +106,7 @@ def generate_speccert_manuscript_assets(
   author = {Monreal-Hern\\'andez, Andre},
   title = {{SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)}},
   year = {2026},
-  version = {1.0.0},
+  version = {1.1.0},
   publisher = {Zenodo},
   url = {https://github.com/sircalch/speccert}
 }

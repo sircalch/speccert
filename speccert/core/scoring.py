@@ -88,7 +88,7 @@ def assess_spectroscopy_quality(
         recommendations=recommendations,
         provenance={
             "tool": "SpecCert",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "citation": "Monreal-Hernández, A. (2026). SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)."
         }
     )

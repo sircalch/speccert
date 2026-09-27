@@ -38,7 +38,7 @@ def calculate_uv_vis_spectrum(
     transitions_character: Optional[List[str]] = None,
     spin_multiplicities: Optional[List[int]] = None,
     fwhm_ev: float = 0.30,
-    wavelength_range_nm: Tuple[float, float] = (200.0, 800.0),
+    wavelength_range_nm: Optional[Tuple[float, float]] = None,
     n_grid_points: int = 600
 ) -> UVVisResult:
     """
@@ -55,7 +55,10 @@ def calculate_uv_vis_spectrum(
     spin_multiplicities : list of int, optional
     fwhm_ev : float, default 0.30 eV
         Full Width at Half Maximum for Gaussian broadening.
-    wavelength_range_nm : tuple of (float, float)
+    wavelength_range_nm : tuple of (float, float), optional
+        Plot/search window. By default it spans all transitions: from min(200 nm, shortest
+        transition - 40 nm) to max(800 nm, longest transition + 100 nm), so that absorption
+        maxima below 200 nm are not clipped at the edge of the grid.
     n_grid_points : int
 
     Returns
@@ -73,6 +76,10 @@ def calculate_uv_vis_spectrum(
     sigma_ev = fwhm_ev / (2.0 * np.sqrt(2.0 * np.log(2.0)))
 
     # Wavelength grid (nm) and corresponding energy grid (eV)
+    if wavelength_range_nm is None:
+        wl_states = HC_EV_NM / np.clip(e_arr, 1e-4, None)
+        wavelength_range_nm = (max(50.0, min(200.0, float(wl_states.min()) - 40.0)),
+                               max(800.0, float(wl_states.max()) + 100.0))
     wl_grid = np.linspace(wavelength_range_nm[0], wavelength_range_nm[1], n_grid_points)
     e_grid = HC_EV_NM / wl_grid
 
@@ -87,6 +94,7 @@ def calculate_uv_vis_spectrum(
     # Find lambda_max
     max_idx = int(np.argmax(eps_grid))
     lambda_max = float(wl_grid[max_idx])
+    at_grid_edge = max_idx in (0, len(wl_grid) - 1)
     max_f = float(np.max(f_arr))
     tot_f = float(np.sum(f_arr))
 
@@ -112,6 +120,9 @@ def calculate_uv_vis_spectrum(
     else:
         status = "PASS"
         diag = f"UV-Vis absorption spectrum successfully simulated ({n_states} states, lambda_max = {lambda_max:.1f} nm, max f = {max_f:.4f}, sum(f) = {tot_f:.3f})."
+        if at_grid_edge:
+            status = "WARNING"
+            diag += " The absorption maximum lies at the edge of the wavelength window; widen wavelength_range_nm."
 
     return UVVisResult(
         n_states=n_states,

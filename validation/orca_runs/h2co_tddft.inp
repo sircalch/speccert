@@ -1,0 +1,5 @@
+! B3LYP D3BJ def2-SVP TightSCF
+%tddft
+  nroots 6
+end
+* xyzfile 0 1 h2co_min.xyz

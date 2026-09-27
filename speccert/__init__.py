@@ -3,7 +3,7 @@ SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/
 and Electronic Structure Certification (DOS & d-Band Center).
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Andres Monreal-Hernández"
 __license__ = "MIT"
 
