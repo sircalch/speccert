@@ -4,7 +4,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/speccert.svg?color=blue)](https://pypi.org/project/speccert/)
 [![Python versions](https://img.shields.io/pypi/pyversions/speccert.svg)](https://pypi.org/project/speccert/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1234610.svg)](https://doi.org/10.5281/zenodo.1234610)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22217588.svg)](https://doi.org/10.5281/zenodo.22217588)
 
 > **Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center).**
 
