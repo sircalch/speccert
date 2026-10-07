@@ -76,7 +76,7 @@ def generate_speccert_figures(
         plt.close()
 
     # 2. Scaled IR Vibrational Spectrum
-    if report.vibrational is not None:
+    if report.vibrational is not None and report.vibrational.ir_absorbance_convoluted is not None:
         vib = report.vibrational
         nu_grid = np.asarray(vib.frequency_grid_cm1)
         abs_grid = np.asarray(vib.ir_absorbance_convoluted)
@@ -87,7 +87,7 @@ def generate_speccert_figures(
         # Invert x-axis (standard in vibrational spectroscopy: 4000 -> 400 cm^-1)
         ax.set_xlim(max(nu_grid), min(nu_grid))
         ax.set_xlabel(r"Wavenumber $\tilde{\nu}$ ($\mathrm{cm}^{-1}$)")
-        ax.set_ylabel("IR Absorbance (arb. units)")
+        ax.set_ylabel(r"IR intensity (km mol$^{-1}$ per cm$^{-1}$)")
 
         # Annotate top diagnostic peaks
         for band in vib.top_diagnostic_bands[:3]:
@@ -102,7 +102,7 @@ def generate_speccert_figures(
                     color="#4c1d95"
                 )
 
-        ax.set_title(rf"IR Vibrational Spectrum — Scaled by {vib.scaling_factor_applied:.4f} ({vib.functional_name})")
+        ax.set_title(rf"IR spectrum, frequencies scaled by {vib.scaling_factor_applied:.3f}")
         ax.grid(True)
 
         plt.tight_layout()

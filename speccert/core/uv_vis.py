@@ -7,6 +7,11 @@ from dataclasses import dataclass
 import numpy as np
 
 HC_EV_NM = 1239.841984  # Planck constant * c in eV * nm
+EV_TO_CM1 = 8065.543937
+# Oscillator strength and molar absorption coefficient: f = 4.319e-9 * integral(eps d nu~), nu~ in cm^-1
+# (eps in L mol^-1 cm^-1). For a band normalised in eV this gives integral(eps dE) = f * EPS_PER_F_EV.
+F_EPS_COEFF = 4.319e-9
+EPS_PER_F_EV = 1.0 / (F_EPS_COEFF * EV_TO_CM1)  # 2.8706e4 L mol^-1 cm^-1 eV
 
 
 @dataclass
@@ -83,13 +88,12 @@ def calculate_uv_vis_spectrum(
     wl_grid = np.linspace(wavelength_range_nm[0], wavelength_range_nm[1], n_grid_points)
     e_grid = HC_EV_NM / wl_grid
 
-    # Gaussian convolution: epsilon(E) = (1.3062974e8 / FWHM_cm) * sum f_i * exp(-4 ln2 * ((E - E_i)/FWHM)^2)
-    # in standard standard units:
+    # Gaussian convolution in energy: eps(E) = EPS_PER_F_EV * sum_i f_i g(E - E_i), with g a unit-area Gaussian (eV^-1)
     eps_grid = np.zeros_like(e_grid)
     for e_i, f_i in zip(e_arr, f_arr):
         if f_i > 0:
             gauss = np.exp(-0.5 * ((e_grid - e_i) / sigma_ev)**2) / (sigma_ev * np.sqrt(2.0 * np.pi))
-            eps_grid += f_i * gauss * 2.174e4  # Scale to typical molar absorption units L/(mol*cm)
+            eps_grid += f_i * gauss * EPS_PER_F_EV  # L mol^-1 cm^-1
 
     # Find lambda_max
     max_idx = int(np.argmax(eps_grid))
@@ -113,16 +117,26 @@ def calculate_uv_vis_spectrum(
             spin_multiplicity=s_mult
         ))
 
-    # Diagnostic & status
+    # Above the highest computed state the spectrum is incomplete: states that were not computed would add
+    # intensity there. A maximum within 2 FWHM of the highest computed excitation depends on how many states
+    # were requested.
+    e_at_max = float(HC_EV_NM / lambda_max)
+    truncated = n_states > 1 and e_at_max > float(e_arr.max()) - 2.0 * fwhm_ev
     if max_f < 1e-4:
         status = "WARNING"
-        diag = "All calculated transitions are optically dark / forbidden (max oscillator strength f < 0.0001)."
+        diag = "All calculated transitions are dark (largest oscillator strength < 1e-4)."
     else:
         status = "PASS"
-        diag = f"UV-Vis absorption spectrum successfully simulated ({n_states} states, lambda_max = {lambda_max:.1f} nm, max f = {max_f:.4f}, sum(f) = {tot_f:.3f})."
+        diag = (f"Spectrum from {n_states} states (Gaussian FWHM {fwhm_ev:.2f} eV): lambda_max = {lambda_max:.1f} nm, "
+                f"eps_max = {float(eps_grid[max_idx]):.3g} L mol^-1 cm^-1, largest f = {max_f:.4f}, sum f = {tot_f:.3f}.")
         if at_grid_edge:
             status = "WARNING"
-            diag += " The absorption maximum lies at the edge of the wavelength window; widen wavelength_range_nm."
+            diag += " The maximum lies at the edge of the wavelength window; widen wavelength_range_nm."
+        elif truncated:
+            status = "WARNING"
+            diag += (f" The maximum ({e_at_max:.2f} eV) lies within 2 FWHM of the highest computed state "
+                     f"({float(e_arr.max()):.2f} eV), where uncomputed states would also absorb; it depends on the "
+                     f"number of states requested. Compute more states or restrict wavelength_range_nm.")
 
     return UVVisResult(
         n_states=n_states,

@@ -1,4 +1,4 @@
-﻿"""
+"""
 Command Line Interface (CLI) for SpecCert.
 """
 
@@ -8,7 +8,10 @@ import argparse
 import numpy as np
 
 from speccert import __version__
+from speccert import __version__
+from speccert.citation import APA, BIBTEX
 from speccert.parsers.orca_tddft import parse_orca_tddft_output
+from speccert.parsers.orca_freq import parse_orca_freq_output
 from speccert.parsers.gaussian_tddft import parse_gaussian_tddft_output
 from speccert.parsers.vasp_doscar import parse_vasp_doscar
 from speccert.parsers.generic_spectra_csv import parse_spectral_csv
@@ -127,7 +130,7 @@ def run_demo(output_dir: str = "speccert_demo_output"):
     generate_speccert_html_report(report, html_p, methods_text=methods_txt, citation_bib=bib_txt)
 
     print("\n" + "="*70)
-    print(f" [RESULT] Overall Spectroscopy Certification: {report.overall_status}")
+    print(f" [RESULT] Overall status: {report.overall_status}")
     print(f" [SCORE]  {report.validation_score}")
     print("="*70)
     print(f" * Target System    : {report.metadata['system']}")
@@ -164,22 +167,39 @@ def run_assess(args):
         if "energies_ev" in data and "oscillator_strengths" in data:
             uv_res = calculate_uv_vis_spectrum(
                 energies_ev=data["energies_ev"],
-                oscillator_strengths=data["oscillator_strengths"]
+                oscillator_strengths=data["oscillator_strengths"],
+                fwhm_ev=args.uv_fwhm
             )
 
-    # 2. Vibrational input
-    if args.frequencies:
+    # 2. Vibrational input: an ORCA frequency output (frequencies + IR intensities + level of theory), or a list
+    # of frequencies (no intensities, so no IR spectrum)
+    method, basis = args.functional, args.basis
+    if args.input_ir:
+        print(f"\n[SpecCert] Parsing frequencies and IR intensities from: {args.input_ir}...")
+        if args.input_ir.lower().endswith((".out", ".log")):
+            fq = parse_orca_freq_output(args.input_ir)
+            freqs, intens = fq["frequencies_cm1"], fq["ir_intensities_km_mol"]
+            method, basis = method or fq["method"], basis or fq["basis"]
+            print(f"  -> {fq['n_modes']} modes, level of theory read from the input: {fq['method']} / {fq['basis']}")
+        else:
+            c = parse_spectral_csv(args.input_ir)
+            freqs, intens = c.get("frequencies_cm1"), c.get("intensities")
+        vib_res = calculate_scaled_vibrational_spectrum(
+            frequencies_cm1=freqs, ir_intensities=intens, functional=method, basis=basis,
+            custom_scaling_factor=args.scaling_factor)
+    elif args.frequencies:
         freq_list = [float(x) for x in args.frequencies.split(",")]
         vib_res = calculate_scaled_vibrational_spectrum(
-            frequencies_cm1=freq_list,
-            functional=args.functional or "B3LYP"
-        )
+            frequencies_cm1=freq_list, functional=method, basis=basis, custom_scaling_factor=args.scaling_factor)
 
     # 3. DOS input
     if args.input_dos:
         print(f"\n[SpecCert] Parsing DOS data from: {args.input_dos}...")
         if "doscar" in args.input_dos.lower():
-            dos_data = parse_vasp_doscar(args.input_dos)
+            ions = [int(x) for x in args.ions.split(",")] if args.ions else None
+            dos_data = parse_vasp_doscar(args.input_dos, ions=ions)
+            print(f"  -> ISPIN = {dos_data['ispin']}, {dos_data['n_ions']} ions, d-DOS summed over ions "
+                  f"{dos_data['ions_used'] if args.ions else 'all'}")
         else:
             dos_data = parse_spectral_csv(args.input_dos)
 
@@ -192,9 +212,12 @@ def run_assess(args):
             )
 
     meta = {
-        "system": args.system or "Chemical / Surface System",
-        "functional": args.functional or "DFT",
-        "software": args.software or "ORCA / Gaussian / VASP"
+        "system": args.system or "the system",
+        "functional": " / ".join(x for x in (method, basis) if x) or "an unstated level of theory",
+        "software": args.software or " and ".join(
+            x for x, used in (("ORCA", (args.input_uv or "").lower().endswith((".out", ".log"))
+                                         or (args.input_ir or "").lower().endswith((".out", ".log"))),
+                              ("VASP", "doscar" in (args.input_dos or "").lower())) if used) or "an unstated program"
     }
 
     report = assess_spectroscopy_quality(
@@ -220,7 +243,7 @@ def run_assess(args):
     generate_speccert_html_report(report, html_p, methods_text=methods_txt, citation_bib=bib_txt)
 
     print("\n" + "="*70)
-    print(f" [RESULT] Overall Quality Certification: {report.overall_status}")
+    print(f" [RESULT] Overall status: {report.overall_status}")
     print(f" [SCORE]  {report.validation_score}")
     print("="*70)
     if report.uv_vis:
@@ -232,20 +255,14 @@ def run_assess(args):
 
 
 def print_citation():
-    bib = """@software{monreal2026speccert,
-  author = {Monreal-Hern\\'andez, Andre},
-  title = {{SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)}},
-  year = {2026},
-  version = {1.1.0},
-  publisher = {Zenodo},
-  url = {https://github.com/sircalch/speccert}
-}"""
-    print("\nIf you use SpecCert in your publications, please cite:\n")
-    print("APA Style:")
-    print("Monreal-Hernández, A. (2026). SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center) (v1.1.0). Zenodo. https://github.com/sircalch/speccert\n")
-    print("BibTeX:")
-    print(bib)
     print()
+    print("If you use SpecCert in your publications, please cite:")
+    print()
+    print("APA Style:")
+    print(APA)
+    print()
+    print("BibTeX:")
+    print(BIBTEX)
 
 
 def main():
@@ -261,7 +278,12 @@ def main():
     assess_parser = subparsers.add_parser("assess", help="Assess UV-Vis, IR vibrational spectra, or DOS / d-band")
     assess_parser.add_argument("--input-uv", default=None, help="Path to TD-DFT output or UV-Vis CSV table")
     assess_parser.add_argument("--input-dos", default=None, help="Path to VASP DOSCAR or DOS CSV table")
-    assess_parser.add_argument("--frequencies", default=None, help="Comma-separated vibrational frequencies in cm^-1")
+    assess_parser.add_argument("--input-ir", default=None, help="ORCA frequency output (.out) or CSV with frequency and intensity columns")
+    assess_parser.add_argument("--frequencies", default=None, help="Comma-separated harmonic frequencies in cm^-1 (no intensities: no IR spectrum)")
+    assess_parser.add_argument("--basis", default=None, help="Basis set for the CCCBDB scaling factor (read from ORCA outputs if not given)")
+    assess_parser.add_argument("--scaling-factor", type=float, default=None, help="Frequency scaling factor overriding the CCCBDB table")
+    assess_parser.add_argument("--uv-fwhm", type=float, default=0.30, help="Gaussian FWHM (eV) of the UV-Vis broadening (default 0.30)")
+    assess_parser.add_argument("--ions", default=None, help="Comma-separated 1-based ion numbers whose d-DOS is used (default: all ions)")
     assess_parser.add_argument("-o", "--output", default="speccert_output", help="Directory for output report (default: speccert_output)")
     assess_parser.add_argument("--system", default=None, help="Molecule / Surface name")
     assess_parser.add_argument("--functional", default=None, help="DFT functional / level of theory")

@@ -26,3 +26,21 @@ def test_dos_and_dband_center_calculation():
     assert np.isclose(res.d_band_center_filled_ev, -2.0, atol=0.15)
     assert res.d_band_width_ev is not None
     assert res.d_band_filling_fraction is not None
+
+
+def test_doscar_spin_polarised_lm_layout_sums_both_spins_and_all_ions():
+    import os
+    from speccert.parsers.vasp_doscar import parse_vasp_doscar
+    p = os.path.join(os.path.dirname(__file__), "data", "DOSCAR_spin_lm")
+    d = parse_vasp_doscar(p)
+    assert d["ispin"] == 2 and d["n_ions"] == 2
+    assert d["total_dos"][0] == pytest.approx(3.0)            # up + down
+    # d channels: 5 orbitals x 2 spins x (0.5 + 1.0) over the two ions
+    assert d["projected_d_dos"][0] == pytest.approx(15.0)
+    assert parse_vasp_doscar(p, ions=[2])["projected_d_dos"][0] == pytest.approx(10.0)
+
+
+def test_no_projection_is_a_warning():
+    e = np.linspace(-5, 5, 50)
+    res = calculate_dos_and_dband_center(e.tolist(), np.ones(50).tolist(), None, 0.0)
+    assert res.status == "WARNING"

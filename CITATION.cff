@@ -1,12 +1,12 @@
-﻿cff-version: 1.2.0
+cff-version: 1.2.0
 message: "If you use this software in your research, please cite it as below."
 authors:
   - family-names: "Monreal-Hernández"
     given-names: "Andrés"
     orcid: "https://orcid.org/0009-0009-1207-8597"
     affiliation: "Universidad Estatal de Sonora"
-title: "SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)"
-version: 1.1.0
+title: "SpecCert: checked UV-Vis and IR spectra from ORCA outputs and d-band moments from VASP DOSCAR files"
+version: 1.2.0
 doi: 10.5281/zenodo.22217588
 date-released: 2026-08-31
 license: MIT

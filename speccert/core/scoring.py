@@ -6,6 +6,9 @@ from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, asdict
 import numpy as np
 
+from speccert import __version__
+from speccert.citation import APA
+
 from speccert.core.uv_vis import UVVisResult
 from speccert.core.vibrational import VibrationalSpectrumResult
 from speccert.core.dos_dband import DOSAnalysisResult
@@ -66,17 +69,17 @@ def assess_spectroscopy_quality(
             recommendations.append(dos_res.diagnostic_message)
 
     if not statuses:
-        overall_status = "PASS"
-        validation_score = "SPECTROSCOPY & ELECTRONIC STRUCTURE = UNVERIFIED"
+        overall_status = "NOT_APPLICABLE"
+        validation_score = "NO CHECKS RUN"
     elif "FAIL" in statuses:
         overall_status = "FAIL"
-        validation_score = "SPECTROSCOPY & ELECTRONIC STRUCTURE = FAILED / METHODOLOGICAL INCONSISTENCIES"
+        validation_score = "AT LEAST ONE CHECK FAILED"
     elif "WARNING" in statuses:
         overall_status = "WARNING"
-        validation_score = "SPECTROSCOPY & ELECTRONIC STRUCTURE = ACCEPTABLE WITH WARNINGS"
+        validation_score = "PASSED WITH WARNINGS"
     else:
         overall_status = "PASS"
-        validation_score = "SPECTROSCOPY & ELECTRONIC STRUCTURE = FULLY CERTIFIED (PUBLICATION GRADE)"
+        validation_score = "ALL CHECKS PASSED"
 
     return SpectroscopyReport(
         overall_status=overall_status,
@@ -88,7 +91,7 @@ def assess_spectroscopy_quality(
         recommendations=recommendations,
         provenance={
             "tool": "SpecCert",
-            "version": "1.1.0",
-            "citation": "Monreal-Hernández, A. (2026). SpecCert: Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)."
+            "version": __version__,
+            "citation": APA
         }
     )

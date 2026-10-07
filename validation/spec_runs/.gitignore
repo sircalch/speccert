@@ -1,0 +1,10 @@
+# keep only what the benchmark reads; ORCA scratch files are not tracked
+*
+!.gitignore
+!*/
+!*.inp
+!*.out
+!*.hess
+!opt_freq.xyz
+!tddft.out.ABS.dat
+*.appr.hess

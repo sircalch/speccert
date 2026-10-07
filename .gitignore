@@ -27,3 +27,4 @@ htmlcov/
 speccert_output/
 speccert_demo_output/
 speccert_quickstart_output/
+validation/results/_cli_tmp/

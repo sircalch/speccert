@@ -90,11 +90,23 @@ def calculate_dos_and_dband_center(
             d_center_full = float(np.trapezoid(e_rel * pdos_d, e_rel) / int_total_d)
             d_filling = float(min(1.0, max(0.0, int_filled_d / int_total_d)))
 
-    status = "PASS"
     if d_center_filled is not None:
-        diag = f"Electronic DOS & d-band model certified (Filled d-band center eps_d = {d_center_filled:.3f} eV rel to E_F, d-band width W_d = {d_width:.3f} eV, filling = {d_filling*100:.1f}%)."
+        status = "PASS"
+        diag = (f"d-band moments relative to E_F: centre of the occupied part {d_center_filled:.3f} eV, centre of the "
+                f"whole band {d_center_full:.3f} eV, width of the occupied part (square root of the second central "
+                f"moment) {d_width:.3f} eV, filling {d_filling * 100:.1f}%.")
+        e_max = float(e_rel.max())
+        if e_max < 2.0:
+            status = "WARNING"
+            diag += (f" The energy grid ends {e_max:.2f} eV above E_F, so the unoccupied d states are cut off: the "
+                     f"whole-band centre and the filling are not meaningful.")
+    elif projected_d_dos is None:
+        status = "WARNING"
+        diag = (f"No d-projected DOS (VASP LORBIT not set?): only the total DOS was read ({n_pts} points, "
+                f"E_F = {fermi_energy_ev:.3f} eV); no d-band moments.")
     else:
-        diag = f"Total DOS analyzed ({n_pts} grid points centered around E_F = {fermi_energy_ev:.3f} eV)."
+        status = "FAIL"
+        diag = "The d-projected DOS below E_F integrates to zero; check the Fermi level and the projections."
 
     return DOSAnalysisResult(
         n_energy_points=n_pts,

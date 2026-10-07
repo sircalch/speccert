@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "speccert"
-version = "1.1.0"
-description = "Automated Quality-Control, Spectroscopy Simulation (UV-Vis TD-DFT, IR/Raman Anharmonic Scaling), and Electronic Structure Certification (DOS & d-Band Center)"
+version = "1.2.0"
+description = "Checked UV-Vis and IR spectra from ORCA outputs and d-band moments from VASP DOSCAR files"
 readme = "README.md"
 authors = [
     { name = "Andrés Monreal-Hernández", email = "andres.monreal@ues.mx" }
@@ -72,5 +72,8 @@ Changelog = "https://github.com/sircalch/speccert/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 include = ["speccert*"]
+
+[tool.setuptools.package-data]
+speccert = ["data/*.csv"]
 
 

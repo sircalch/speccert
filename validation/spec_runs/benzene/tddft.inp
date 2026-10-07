@@ -1,0 +1,6 @@
+# benzene: TD-DFT at the optimised geometry
+! B3LYP D3BJ def2-SVP TightSCF
+%tddft
+  nroots 15
+end
+* xyzfile 0 1 opt_freq.xyz

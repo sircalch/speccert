@@ -24,14 +24,14 @@ def test_full_speccert_pipeline():
     }
 
     uv_res = calculate_uv_vis_spectrum(
-        energies_ev=[3.2, 4.1],
-        oscillator_strengths=[0.15, 0.65]
+        energies_ev=[3.2, 4.1, 5.5],
+        oscillator_strengths=[0.15, 0.65, 0.05]
     )
 
     vib_res = calculate_scaled_vibrational_spectrum(
         frequencies_cm1=[800.0, 1600.0, 1720.0, 3050.0],
         ir_intensities=[30.0, 80.0, 350.0, 45.0],
-        functional="B3LYP"
+        functional="B3LYP", basis="6-31G(d)"
     )
 
     e_grid = np.linspace(-6.0, 3.0, 200)
@@ -49,7 +49,8 @@ def test_full_speccert_pipeline():
         dos_res=dos_res
     )
 
-    assert report.overall_status == "PASS"
+    assert report.overall_status == "PASS", report.recommendations
+    assert report.validation_score == "ALL CHECKS PASSED"
 
     with tempfile.TemporaryDirectory() as tmpdir:
         plots = generate_speccert_figures(report, tmpdir, formats=["png", "svg"])

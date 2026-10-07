@@ -4,6 +4,7 @@ Interactive HTML report dashboard generator for SpecCert.
 
 import os
 import jinja2
+from speccert import __version__
 from speccert.core.scoring import SpectroscopyReport
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -242,7 +243,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
         {% endif %}
 
-        <h2 class="section-title">Computational Methods (Publication Ready)</h2>
+        <h2 class="section-title">Computational Methods (draft, edit before use)</h2>
         <div class="box">
             <pre id="methodsSnippet">{{ methods_text }}</pre>
             <button class="btn-copy" onclick="copyToClipboard('methodsSnippet')">Copy Methods Snippet</button>
@@ -255,7 +256,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
 
         <footer>
-            Generated automatically by <strong>SpecCert v1.1.0</strong> &bull; Spectroscopy & Electronic Structure Certification &bull; Monreal-Hernández, 2026.
+            Generated automatically by <strong>SpecCert v{{ version }}</strong> &bull; UV-Vis, IR and d-band checks &bull; Monreal-Hernández, 2026.
         </footer>
     </div>
 
@@ -287,7 +288,8 @@ def generate_speccert_html_report(
     rendered = template.render(
         report=report,
         methods_text=methods_text,
-        citation_bib=citation_bib
+        citation_bib=citation_bib,
+        version=__version__
     )
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(rendered)
