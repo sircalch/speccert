@@ -122,7 +122,8 @@ def fig_ir():
     b.set_xlabel(r"scaled wavenumber (cm$^{-1}$)")
     b.set_ylabel(r"IR intensity (km mol$^{-1}$ per cm$^{-1}$)")
     b.set_title("acrolein", pad=3)
-    b.legend(loc="center", handlelength=1.5)
+    b.set_ylim(top=10)
+    b.legend(loc="upper right", handlelength=1.5)
     panel(b, "b")
     fig.tight_layout(w_pad=2.0)
     save(fig, "fig2_ir")
@@ -143,7 +144,8 @@ def fig_dband():
               linewidth=0.9, label="SpecCert 1.0.0/1.1.0")
     a.scatter(d.centre_filled_pymatgen, d.centre_filled_speccert, s=12, color=NEW, linewidth=0, label="SpecCert 1.2.0")
     for _, r in d.iterrows():
-        a.annotate(r.system, (r.centre_filled_pymatgen, r.centre_filled_speccert), xytext=(3, -8),
+        a.annotate(r.system, (r.centre_filled_pymatgen, r.centre_filled_speccert),
+                   xytext={"Cu": (-15, 6), "Co18": (-24, -4), "Fe": (5, -9), "Fe39": (-26, 3)}.get(r.system, (3, -8)),
                    textcoords="offset points", fontsize=5.5, color=INK2)
     a.set_xlim(lim)
     a.set_ylim(lim)
@@ -163,7 +165,7 @@ def fig_dband():
         b.scatter([i + 0.33], [c[0]], marker="<", s=22, color=AUX, label="first atom" if i == 0 else None)
     b.set_xticks(range(3), [r"Fe$_{39}$", r"Ni$_{47}$", r"Co$_{18}$"])
     b.set_ylabel(r"$\varepsilon_d$, occupied part (eV)")
-    b.legend(loc="lower right", fontsize=6)
+    b.legend(loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=2, fontsize=6)
     panel(b, "b")
     fig.tight_layout(w_pad=2.0)
     save(fig, "fig3_dband")
