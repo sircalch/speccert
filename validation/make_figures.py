@@ -104,7 +104,8 @@ def fig_ir():
                label="SpecCert 1.0.0/1.1.0 (any basis)" if i == 0 else None)
     a.set_xticks(range(len(methods)), [LABEL.get(m, m) for m in methods], rotation=30, ha="right")
     a.set_ylabel("frequency scaling factor")
-    a.legend(loc="lower right", handletextpad=0.4)
+    a.set_ylim(0.78, 1.0)
+    a.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=1, handletextpad=0.4)
     panel(a, "a")
     fq = parse_orca_freq_output(os.path.join(RUNS, "acrolein", "opt_freq.out"))
     real = calculate_scaled_vibrational_spectrum(fq["frequencies_cm1"], fq["ir_intensities_km_mol"],
@@ -122,7 +123,7 @@ def fig_ir():
     b.set_xlabel(r"scaled wavenumber (cm$^{-1}$)")
     b.set_ylabel(r"IR intensity (km mol$^{-1}$ per cm$^{-1}$)")
     b.set_title("acrolein", pad=3)
-    b.set_ylim(top=10)
+    b.set_ylim(-4.5, 12)
     b.legend(loc="upper right", handlelength=1.5)
     panel(b, "b")
     fig.tight_layout(w_pad=2.0)
@@ -145,7 +146,7 @@ def fig_dband():
     a.scatter(d.centre_filled_pymatgen, d.centre_filled_speccert, s=12, color=NEW, linewidth=0, label="SpecCert 1.2.0")
     for _, r in d.iterrows():
         a.annotate(r.system, (r.centre_filled_pymatgen, r.centre_filled_speccert),
-                   xytext={"Cu": (-15, 6), "Co18": (-24, -4), "Fe": (5, -9), "Fe39": (-26, 3)}.get(r.system, (3, -8)),
+                   xytext={"Cu": (-4, 9), "Co18": (-30, -9), "Fe": (7, -2), "Fe39": (-4, -13), "Ni47": (6, 3)}.get(r.system, (3, -8)),
                    textcoords="offset points", fontsize=5.5, color=INK2)
     a.set_xlim(lim)
     a.set_ylim(lim)
