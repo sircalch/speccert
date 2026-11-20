@@ -9,7 +9,7 @@ TITLE = "SpecCert: checked UV-Vis and IR spectra from ORCA outputs and d-band mo
 
 BIBTEX = (
     "@software{monreal2026speccert,\n"
-    "  author = {Monreal-Hern{\\'a}ndez, Andr{\\'e}s},\n"
+    "  author = {Monreal-Hernández, Andrés},\n"
     f"  title = {{{{{TITLE}}}}},\n"
     "  year = {2026},\n"
     f"  version = {{{__version__}}},\n"
