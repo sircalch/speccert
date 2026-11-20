@@ -103,6 +103,12 @@ dband = calculate_dos_and_dband_center(d["energies_ev"], d["total_dos"], d["proj
 print(uv.status, ir.status, dband.status, dband.d_band_center_filled_ev)
 ```
 
+## Documentation and help
+
+- Documentation and API reference: <https://sircalch.github.io/speccert/>
+- Questions and bug reports: [issue tracker](https://github.com/sircalch/speccert/issues)
+- Support, contribution and governance: [`CONTRIBUTING.md`](CONTRIBUTING.md) · [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) · [`SECURITY.md`](SECURITY.md)
+
 ## Citation
 
 `speccert cite` prints the APA and BibTeX entries for the installed version (concept DOI 10.5281/zenodo.22217588).
