@@ -1,0 +1,61 @@
+site_name: SpecCert
+site_description: "SpecCert: checked UV-Vis and IR spectra from ORCA outputs and d-band moments from VASP DOSCAR files."
+site_url: https://sircalch.github.io/speccert/
+repo_url: https://github.com/sircalch/speccert
+repo_name: sircalch/speccert
+edit_uri: edit/master/docs/
+copyright: Copyright &copy; 2026 Andrés Monreal Hernández · MIT License
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: false
+            show_root_heading: true
+            heading_level: 3
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - API reference: api.md
+  - Citing SpecCert: citing.md
+  - Support and contributing: support.md
