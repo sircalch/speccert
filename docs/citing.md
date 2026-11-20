@@ -2,13 +2,13 @@
 
 If SpecCert helps your research, please cite it. The repository's [`CITATION.cff`](https://github.com/sircalch/speccert/blob/master/CITATION.cff) is the canonical record; GitHub's "Cite this repository" button uses it.
 
-Version 1.2.0 (2026-10-06) is archived on Zenodo with the DOI [10.5281/zenodo.22217588](https://doi.org/10.5281/zenodo.22217588).
+Version 1.2.1 (2026-11-20) is archived on Zenodo with the DOI [10.5281/zenodo.22217588](https://doi.org/10.5281/zenodo.22217588).
 
 ```bibtex
-@software{speccert_1_2_0,
-  author  = {Monreal-Hern{\'a}ndez, Andr{\'e}s},
+@software{speccert_1_2_1,
+  author  = {Monreal-Hernández, Andrés},
   title   = {SpecCert},
-  version = {1.2.0},
+  version = {1.2.1},
   year    = {2026},
   doi     = {10.5281/zenodo.22217588},
   url     = {https://github.com/sircalch/speccert}

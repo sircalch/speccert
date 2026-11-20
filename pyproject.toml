@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "speccert"
-version = "1.2.0"
+version = "1.2.1"
 description = "Checked UV-Vis and IR spectra from ORCA outputs and d-band moments from VASP DOSCAR files"
 readme = "README.md"
 authors = [
